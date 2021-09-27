@@ -538,7 +538,7 @@ class Upgrader {
           ));
     }
     return Dialog(
-      backgroundColor: backgroundColor ?? Colors.white,
+      backgroundColor: backgroundColor,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
