@@ -30,7 +30,13 @@ class MyApp extends StatelessWidget {
             title: Text('Upgrader Example'),
           ),
           body: UpgradeAlert(
+            // dialogStyle: UpgradeDialogStyle.cupertino,
             debugLogging: true,
+            messages: UpgraderMessages(code: 'vi'),
+            countryCode: 'VN',
+            backgroundColor: Colors.black,
+            messagesColor: Colors.white,
+            buttonColor: Colors.red,
             child: Center(child: Text('Checking...')),
           )),
     );

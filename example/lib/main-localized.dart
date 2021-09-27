@@ -2,8 +2,8 @@
  * Copyright (c) 2020 Larry Aasen. All rights reserved.
  */
 
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -168,6 +168,9 @@ class MyUpgraderMessages extends UpgraderMessages {
           return 'es Want to update?';
         case UpgraderMessage.title:
           return 'es Update App?';
+        case UpgraderMessage.notes:
+          return 'es Release Notes: ';
+          break;
       }
     }
     // Messages that are not provided above can still use the default values.

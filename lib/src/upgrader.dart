@@ -112,6 +112,12 @@ class Upgrader {
   /// The target platform.
   TargetPlatform platform = defaultTargetPlatform;
 
+  Color? backgroundColor;
+
+  Color? messagesColor;
+
+  Color? buttonColor;
+
   /// The target operating system.
   String operatingSystem = Platform.operatingSystem;
 
@@ -302,7 +308,7 @@ class Upgrader {
   String? get releaseNotes => _releaseNotes;
 
   String message() {
-    var msg = messages!.message(UpgraderMessage.body)!;
+    var msg = messages!.message(UpgraderMessage.body);
     msg = msg.replaceAll('{{appName}}', appName());
     msg = msg.replaceAll(
         '{{currentAppStoreVersion}}', currentAppStoreVersion() ?? '');
@@ -500,7 +506,7 @@ class Upgrader {
     return false;
   }
 
-  AlertDialog _alertDialog(String title, String message, String? releaseNotes,
+  Widget _alertDialog(String title, String message, String? releaseNotes,
       BuildContext context) {
     Widget? notes;
     if (releaseNotes != null) {
@@ -510,44 +516,115 @@ class Upgrader {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('Release Notes:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                messages!.message(UpgraderMessage.notes),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: messagesColor,
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
               Text(
                 releaseNotes,
                 maxLines: 15,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: messagesColor,
+                ),
               ),
             ],
           ));
     }
-    return AlertDialog(
-      title: Text(title),
-      content: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Dialog(
+      backgroundColor: backgroundColor ?? Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(message),
-          Padding(
-              padding: EdgeInsets.only(top: 15.0),
-              child: Text(messages!.message(UpgraderMessage.prompt)!)),
-          if (notes != null) notes,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(15.0),
+            constraints: const BoxConstraints(maxHeight: 500),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: messagesColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    message,
+                    style: TextStyle(
+                      color: messagesColor,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Text(
+                      messages!.message(UpgraderMessage.prompt),
+                      style: TextStyle(
+                        color: messagesColor,
+                      ),
+                    ),
+                  ),
+                  if (notes != null) notes,
+                ],
+              ),
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              if (showIgnore)
+                Expanded(
+                  child: TextButton(
+                      child: Text(
+                        messages!.message(UpgraderMessage.buttonTitleIgnore),
+                        style: TextStyle(
+                          color: buttonColor,
+                        ),
+                      ),
+                      onPressed: () => onUserIgnored(context, true)),
+                ),
+              if (showLater)
+                Expanded(
+                  child: TextButton(
+                      child: Text(
+                        messages!.message(UpgraderMessage.buttonTitleLater),
+                        style: TextStyle(
+                          color: buttonColor,
+                        ),
+                      ),
+                      onPressed: () => onUserLater(context, true)),
+                ),
+              Expanded(
+                child: TextButton(
+                    child: Text(
+                      messages!.message(UpgraderMessage.buttonTitleUpdate),
+                      style: TextStyle(
+                        color: buttonColor,
+                      ),
+                    ),
+                    onPressed: () => onUserUpdated(context, !blocked())),
+              ),
+            ],
+          ),
         ],
-      )),
-      actions: <Widget>[
-        if (showIgnore)
-          TextButton(
-              child:
-                  Text(messages!.message(UpgraderMessage.buttonTitleIgnore)!),
-              onPressed: () => onUserIgnored(context, true)),
-        if (showLater)
-          TextButton(
-              child: Text(messages!.message(UpgraderMessage.buttonTitleLater)!),
-              onPressed: () => onUserLater(context, true)),
-        TextButton(
-            child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
-            onPressed: () => onUserUpdated(context, !blocked())),
-      ],
+      ),
     );
   }
 
@@ -559,8 +636,12 @@ class Upgrader {
           padding: EdgeInsets.only(top: 15.0),
           child: Column(
             children: <Widget>[
-              Text('Release Notes:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                messages!.message(UpgraderMessage.notes),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text(
                 releaseNotes,
                 maxLines: 14,
@@ -578,23 +659,22 @@ class Upgrader {
           Text(message),
           Padding(
               padding: EdgeInsets.only(top: 15.0),
-              child: Text(messages!.message(UpgraderMessage.prompt)!)),
+              child: Text(messages!.message(UpgraderMessage.prompt))),
           if (notes != null) notes,
         ],
       ),
       actions: <Widget>[
         if (showIgnore)
           CupertinoDialogAction(
-              child:
-                  Text(messages!.message(UpgraderMessage.buttonTitleIgnore)!),
+              child: Text(messages!.message(UpgraderMessage.buttonTitleIgnore)),
               onPressed: () => onUserIgnored(context, true)),
         if (showLater)
           CupertinoDialogAction(
-              child: Text(messages!.message(UpgraderMessage.buttonTitleLater)!),
+              child: Text(messages!.message(UpgraderMessage.buttonTitleLater)),
               onPressed: () => onUserLater(context, true)),
         CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)!),
+            child: Text(messages!.message(UpgraderMessage.buttonTitleUpdate)),
             onPressed: () => onUserUpdated(context, !blocked())),
       ],
     );

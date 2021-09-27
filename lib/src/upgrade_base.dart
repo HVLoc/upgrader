@@ -68,6 +68,12 @@ class UpgradeBase extends StatefulWidget {
   /// The upgrade dialog style. Optional. Used only on UpgradeAlert. (default: material)
   final UpgradeDialogStyle? dialogStyle;
 
+  final Color? backgroundColor;
+
+  final Color? messagesColor;
+
+  final Color? buttonColor;
+
   UpgradeBase({
     Key? key,
     this.appcastConfig,
@@ -88,6 +94,9 @@ class UpgradeBase extends StatefulWidget {
     this.countryCode,
     this.minAppVersion,
     this.dialogStyle = UpgradeDialogStyle.material,
+    this.backgroundColor,
+    this.messagesColor,
+    this.buttonColor,
   }) : super(key: key) {
     if (appcastConfig != null) {
       Upgrader().appcastConfig = appcastConfig;
@@ -142,6 +151,15 @@ class UpgradeBase extends StatefulWidget {
     }
     if (dialogStyle != null) {
       Upgrader().dialogStyle = dialogStyle;
+    }
+    if (backgroundColor != null) {
+      Upgrader().backgroundColor = backgroundColor;
+    }
+    if (messagesColor != null) {
+      Upgrader().messagesColor = messagesColor;
+    }
+    if (buttonColor != null) {
+      Upgrader().buttonColor = buttonColor;
     }
   }
 

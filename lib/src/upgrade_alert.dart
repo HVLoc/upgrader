@@ -33,6 +33,9 @@ class UpgradeAlert extends UpgradeBase {
     String? countryCode,
     String? minAppVersion,
     UpgradeDialogStyle? dialogStyle,
+    Color? backgroundColor,
+    Color? messagesColor,
+    Color? buttonColor,
   }) : super(
           key: key,
           appcastConfig: appcastConfig,
@@ -53,6 +56,9 @@ class UpgradeAlert extends UpgradeBase {
           countryCode: countryCode,
           minAppVersion: minAppVersion,
           dialogStyle: dialogStyle,
+          backgroundColor: backgroundColor,
+          messagesColor: messagesColor,
+          buttonColor: buttonColor,
         );
 
   @override

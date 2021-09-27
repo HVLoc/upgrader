@@ -23,6 +23,9 @@ enum UpgraderMessage {
 
   /// Title
   title,
+
+  /// Release Notes
+  notes
 }
 
 /// The default localized messages used for display in upgrader. Extend this
@@ -50,7 +53,7 @@ class UpgraderMessages {
   }
 
   /// Override the message function to provide custom language localization.
-  String? message(UpgraderMessage messageKey) {
+  String message(UpgraderMessage messageKey) {
     switch (messageKey) {
       case UpgraderMessage.body:
         return body;
@@ -64,9 +67,11 @@ class UpgraderMessages {
         return prompt;
       case UpgraderMessage.title:
         return title;
+      case UpgraderMessage.notes:
+        return notes;
       default:
     }
-    return null;
+    return '';
   }
 
   /// Determine the current language code, either from the context, or
@@ -533,6 +538,19 @@ class UpgraderMessages {
       case 'en':
       default:
         message = 'Update App?';
+        break;
+    }
+    return message;
+  }
+
+  String get notes {
+    String message;
+    switch (languageCode) {
+      case 'vi':
+        message = 'Tính năng mới: ';
+        break;
+      default:
+        message = 'Release Notes:';
         break;
     }
     return message;

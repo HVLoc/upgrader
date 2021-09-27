@@ -104,7 +104,7 @@ class UpgradeCard extends UpgradeBase {
                   color: Colors.white,
                   margin: margin,
                   child: AlertStyleWidget(
-                      title: Text(title ?? ''),
+                      title: Text(title),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -114,18 +114,17 @@ class UpgradeCard extends UpgradeBase {
                           Padding(
                               padding: EdgeInsets.only(top: 15.0),
                               child: Text(Upgrader()
-                                      .messages!
-                                      .message(UpgraderMessage.prompt) ??
-                                  '')),
+                                  .messages!
+                                  .message(UpgraderMessage.prompt))),
                           if (notes != null) notes,
                         ],
                       ),
                       actions: <Widget>[
                         if (Upgrader().showIgnore)
                           TextButton(
-                              child: Text(Upgrader().messages!.message(
-                                      UpgraderMessage.buttonTitleIgnore) ??
-                                  ''),
+                              child: Text(Upgrader()
+                                  .messages!
+                                  .message(UpgraderMessage.buttonTitleIgnore)),
                               onPressed: () {
                                 // Save the date/time as the last time alerted.
                                 Upgrader().saveLastAlerted();
@@ -135,9 +134,9 @@ class UpgradeCard extends UpgradeBase {
                               }),
                         if (Upgrader().showLater)
                           TextButton(
-                              child: Text(Upgrader().messages!.message(
-                                      UpgraderMessage.buttonTitleLater) ??
-                                  ''),
+                              child: Text(Upgrader()
+                                  .messages!
+                                  .message(UpgraderMessage.buttonTitleLater)),
                               onPressed: () {
                                 // Save the date/time as the last time alerted.
                                 Upgrader().saveLastAlerted();
@@ -146,9 +145,9 @@ class UpgradeCard extends UpgradeBase {
                                 state.forceUpdateState();
                               }),
                         TextButton(
-                            child: Text(Upgrader().messages!.message(
-                                    UpgraderMessage.buttonTitleUpdate) ??
-                                ''),
+                            child: Text(Upgrader()
+                                .messages!
+                                .message(UpgraderMessage.buttonTitleUpdate)),
                             onPressed: () {
                               // Save the date/time as the last time alerted.
                               Upgrader().saveLastAlerted();
