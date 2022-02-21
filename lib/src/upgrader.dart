@@ -136,6 +136,9 @@ class Upgrader {
   bool _hasAlerted = false;
   bool _isCriticalUpdate = false;
 
+  String? getAppStoreVersion() => _appStoreVersion;
+  String? getReleaseNotes() => _releaseNotes;
+
   factory Upgrader() {
     return _singleton;
   }
